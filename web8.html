@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }       
+        .lib{
+        background: #d1ecf4;
+        height: 600px;
+        
+        }
+        .books1{
+            background-color: #999999;
+            width: 300px;
+            height: 120px;
+            float: left;
+            text-align: center;
+            line-height: 120px;
+            border-top-left-radius:18px ;
+            border-top-right-radius: 18px;
+            margin: 14px 14px 0 14px;
+            border: #09b0e3 solid 5px;
+        }
+        .books2{
+            background-color: #999;
+            display:inline-block;
+            width: 1200px;
+            height: 120px;
+            line-height: 120px;
+            border-top-left-radius:18px ;
+            border-top-right-radius: 18px;
+            margin: 14px;;
+            border: #09b0e3 solid 5px;
+            border-bottom: none;
+        }
+        .bookname{
+            margin: 0;
+            float: none;
+            height: 20px;
+        }
+        .bb{
+            margin-right: 720px;
+        }
+        .sort{
+            background-color: white;
+            width: 300px;
+            height: 400px;         
+            margin: -15px 14px 14px 14px;
+            float: left;
+            outline: 1px solid black;
+            outline-offset: -5px;
+            text-align: center;
+            border: #09b0e3 solid 1px;
+            border-left-width:5px;
+            border-right-width:5px;
+            border-bottom-width:5px;
+
+        }
+        .sort button{
+            width: 150px;
+            height: 50px;
+            margin-bottom: 3px;
+            border-top-left-radius: 10px;
+            border-bottom-left-radius: 10px;
+            box-shadow: 5px 5px 1px gray;
+            border: none;
+        }
+        .total{
+            margin-top: 40px;
+        }
+        .menu{
+            background-color: white;
+            width: 1200px;
+            height: 400px;         
+            margin: -14px 14px 14px 14px;
+           text-align: center;    
+           display: inline-block;
+            border: #09b0e3 solid 1px;
+            border-left-width:5px;
+            border-right-width:5px;
+            border-bottom-width:5px;
+            border-top: none;
+
+        }
+        .nei{
+            margin-top: 25px;
+            display: inline-block;
+        }
+        table{
+            background-color: #17eec6;
+            width: 750px;
+            height: 100px;
+        }
+        th{
+            background-color: #04f5f5e1;
+        }
+        td{
+            border-bottom: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <div id="main">
+    <div class="lib">
+        <div class="books1">图书目录</div>
+        <div class="books2">输入书名<input  class="bookname" type="text" id="bookname">
+            <button class="bb" onclick="searchBook()">书名查找</button>
+            <button onclick="addBook()">新书录入</button class="bb"></div>
+        <div class="sort">
+            <button id="total" class="total">全部</button><br>
+            <button id="cs">计算机</button><br>
+            <button id="literature">文学</button><br>
+            <button id="math">数学</button><br>
+            <button id="politics">政治</button>    
+        </div>
+        <div class="menu">
+            <div class="nei">
+            <table border="0">
+                <tr><th>书名</th>
+                <th>价格</th>
+                <th>数量</th>
+                <th>操作</th></tr>
+                <tr><td>程序设计</td>
+                <td>30</td>
+                <td>30</td>
+                <td><button>编辑</button>
+                <button>操作</button></td></tr>
+                <tr><td>程序设计</td>
+                <td>30</td>
+                <td>30</td>
+                <td><button>编辑</button>
+                <button>操作</button></td></tr>
+            </table>
+            </div>
+        </div>
+    </div>
+    </div>
+    <script>
+        let data=[
+        {
+        bookId: 1,
+        bookname: "C语言程序设计",
+        category: "计算机",
+        price: 30,
+        num: 30
+    },
+    {
+        bookId: 2,
+        bookname: "Java程序设计",
+        category: "计算机",
+        price: 50,
+        num: 50
+    },
+    {
+        bookId: 3,
+        bookname: "西游记",
+        category: "文学",
+        price: 20,
+        num: 20
+    },
+    {
+        bookId: 4,
+        bookname: "红楼梦",
+        category: "文学",
+        price: 25,
+        num: 25
+    },
+    {
+        bookId: 5,
+        bookname: "高等数学",
+        category: "数学",
+        price: 30,
+        num: 80
+    },
+    {
+        bookId: 6,
+        bookname: "线性代数",
+        category: "数学",
+        price: 45,
+        num: 120
+    },
+    {
+        bookId: 7,
+        bookname: "马克思主义",
+        category: "政治",
+        price: 25,
+        num: 150
+    },
+    {
+        bookId: 8,
+        bookname: "中国近代史",
+        category: "政治",
+        price: 35,
+        num: 200
+    }
+        ]
+        window.onload = function() {
+        renderAll()
+        }
+        const btn = document.getElementById('total')
+        btn.addEventListener('click', () => renderAll())
+        const menu = document.querySelector('table')
+        function renderAll() {
+       
+        menu.innerHTML = ''
+        menu.innerHTML = `<tr>
+                    <th>书名</th>
+                    <th>价格</th>
+                    <th>数量</th>
+                    <th>操作</th>
+                  </tr>`
+        for (let i = 0; i < data.length; i++)
+        menu.innerHTML += `<tr>
+            <td>${data[i].bookname}</td>
+            <td>${data[i].price}</td>
+            <td>${data[i].num}</td>
+            <td><button onclick = "modifyBook(${i})">编辑</button>
+                <button onclick = "deleteBook(${i})">删除</button></td>
+            </tr>`
+        }
+        const btncs = document.getElementById('cs')
+        btncs.onclick = function(){
+            menu.innerHTML = ''
+            menu.innerHTML = `
+                    <tr>
+                    <th>书名</th>
+                    <th>价格</th>
+                    <th>数量</th>
+                    <th>操作</th>
+                  </tr>`
+             for(let i = 0;i < data.length; i++){
+                if(data[i].category==='计算机'){
+                    menu.innerHTML += `<tr>
+                    <td>${data[i].bookname}</td>
+                    <td>${data[i].price}</td>
+                    <td>${data[i].num}</td>
+                    <td><button onclick = "modifyBook(${i})">编辑</button>
+                        <button onclick = "deleteBook(${i})">删除</button></td>
+                </tr>`
+                }
+             }
+        }
+        function BooksByCategory(category){
+            menu.innerHTML = `
+        <tr>
+            <th>书名</th>
+            <th>价格</th>
+            <th>数量</th>
+            <th>操作</th>
+        </tr>`
+            for (let i = 0; i < data.length; i++) {
+                if (data[i].category === category) {
+                menu.innerHTML += `
+                <tr>
+                    <td>${data[i].bookname}</td>
+                    <td>${data[i].price}</td>
+                    <td>${data[i].num}</td>
+                    <td><button onclick = "modifyBook(${i})">编辑</button>
+                        <button onclick = "deleteBook(${i})">删除</button></td>
+                </tr>`
+        }
+            }
+        }
+        const btnliterature = document.getElementById('literature')
+        btnliterature.onclick = () => BooksByCategory('文学')
+        const btnmath = document.getElementById('math')
+        btnmath.onclick =  () => BooksByCategory('数学')
+        const btnpolitics = document.getElementById('politics')
+        btnpolitics.onclick = () => BooksByCategory('政治')
+        function addBook(){
+            const bookName = prompt("请输入书名")
+            const bookPrice = parseFloat(prompt("请输入价格"))
+            const bookCount = parseInt(prompt("请输入数量"))
+            if(bookName&&!isNaN(bookPrice)&&!isNaN(bookCount)){
+               data.push({bookname:bookName,price:bookPrice,num:bookCount})
+            }
+            renderAll()
+        }
+        function deleteBook(index){
+            data.splice(index,1)
+            renderAll()
+        }
+        function modifyBook(index){
+            const book = data[index]
+            const newName = prompt("请输入新的书名",book.bookname)
+            const newPrice = parseFloat(prompt("请输入新的价格",book.price))
+            const newCount = parseInt( prompt("请输入新的数量",book.num))
+            if(newName&&!isNaN(newPrice)&&!isNaN(newCount)){
+                data[index] = {bookname:newName,price:newPrice,num:newCount }
+                renderAll()
+            }else{
+                alert("请输入正确的书名，价格和数量")
+            }
+
+        }
+        function searchBook(){
+            const filter = document.getElementById('bookname').value
+            menu.innerHTML = ''
+            menu.innerHTML = `
+                    <tr>
+                    <th>书名</th>
+                    <th>价格</th>
+                    <th>数量</th>
+                    <th>操作</th>
+                  </tr>`
+            for(let i = 0;i < data.length; i++ ){
+                if(data[i].bookname.toLowerCase().includes(filter.toLowerCase())){
+                    menu.innerHTML += `
+                    <tr>
+                    <td>${data[i].bookname}</td>
+                    <td>${data[i].price}</td>
+                    <td>${data[i].num}</td>
+                    <td><button onclick = "modifyBook(${i})">编辑</button>
+                        <button onclick = "deleteBook(${i})">删除</button></td>
+                    </tr>
+                    `
+                }
+            }
+
+        }
+    </script>
+</body>
+</html>
